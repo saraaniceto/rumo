@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rumo · organize suas tarefas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ SIDEBAR: categorias ============ -->
+  <button type="button" class="menu-toggle" id="menu-toggle">
+    <svg class="menu-toggle__icon" viewBox="0 0 24 24" fill="none">
+      <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__header">
+      <h2 class="sidebar__title">categorias</h2>
+      <button type="button" class="sidebar__close" id="sidebar-close">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <p class="sidebar__hint">crie até 3 categorias pra organizar suas tarefas. dê um nome e escolha uma cor pra cada uma.</p>
+
+    <form class="category-form" id="category-form">
+
+      <div class="category-form__item">
+        <span class="category-form__index">01</span>
+        <div class="category-form__fields">
+          <label class="category-form__label" for="category-name-1">nome da categoria</label>
+          <input
+            type="text"
+            id="category-name-1"
+            name="category-name-1"
+            class="category-form__name"
+            value="trabalho"
+            maxlength="20"
+            placeholder="ex: trabalho"
+          >
+        </div>
+        <label class="category-form__color" for="category-color-1">
+          <input type="color" id="category-color-1" name="category-color-1" value="#A08D17">
+        </label>
+      </div>
+
+      <div class="category-form__item">
+        <span class="category-form__index">02</span>
+        <div class="category-form__fields">
+          <label class="category-form__label" for="category-name-2">nome da categoria</label>
+          <input
+            type="text"
+            id="category-name-2"
+            name="category-name-2"
+            class="category-form__name"
+            value="pessoal"
+            maxlength="20"
+            placeholder="ex: pessoal"
+          >
+        </div>
+        <label class="category-form__color" for="category-color-2">
+          <input type="color" id="category-color-2" name="category-color-2" value="#7C93D9">
+        </label>
+      </div>
+
+      <div class="category-form__item">
+        <span class="category-form__index">03</span>
+        <div class="category-form__fields">
+          <label class="category-form__label" for="category-name-3">nome da categoria</label>
+          <input
+            type="text"
+            id="category-name-3"
+            name="category-name-3"
+            class="category-form__name"
+            value="estudos"
+            maxlength="20"
+            placeholder="ex: estudos"
+          >
+        </div>
+        <label class="category-form__color" for="category-color-3">
+          <input type="color" id="category-color-3" name="category-color-3" value="#FF6C39">
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn--secondary category-form__submit">salvar categorias</button>
+    </form>
+  </aside>
+
+  <!-- ============ APP ============ -->
+  <div class="app">
+
+    <header class="app-header">
+      <div class="app-header__brand">
+        <svg class="app-header__blob app-header__blob--lavender" viewBox="0 0 200 200">
+          <path fill="var(--color-lavender)" opacity="0.5" d="M42,-54.7C53.9,-46.4,62.3,-32.9,66.4,-18C70.5,-3.1,70.3,13.2,63.7,26.8C57.1,40.4,44.1,51.3,29.6,58.2C15.1,65.1,-0.9,68,-16.8,65.2C-32.7,62.4,-48.5,53.9,-58.5,40.8C-68.5,27.7,-72.7,10,-70.6,-6.5C-68.5,-23,-60.1,-38.3,-47.6,-46.8C-35.1,-55.3,-17.6,-57,-1,-55.7C15.5,-54.4,31,-63,42,-54.7Z" transform="translate(100 100)"/>
+        </svg>
+        <svg class="app-header__blob app-header__blob--tangerine" viewBox="0 0 200 200">
+          <path fill="var(--color-tangerine)" opacity="0.18" d="M45,-58.5C58.4,-49.8,69.4,-35.6,73.6,-19.6C77.8,-3.6,75.2,14.2,66.8,28.6C58.4,43,44.2,54,28.4,60.8C12.6,67.6,-4.8,70.2,-21.4,66.4C-38,62.6,-53.8,52.4,-63.4,37.9C-73,23.4,-76.4,4.6,-72.6,-12.3C-68.8,-29.2,-57.8,-44.2,-43.7,-53C-29.6,-61.8,-14.8,-64.4,1.6,-66.6C18,-68.8,36,-70.6,45,-58.5Z" transform="translate(100 100)"/>
+        </svg>
+        <h1 class="app-header__title">Rumo</h1>
+      </div>
+      <p class="app-header__subtitle">dê rumo ao que precisa ser feito, no seu tempo.</p>
+    </header>
+
+    <main class="app-main">
+
+      <!-- ============ LISTA DE TAREFAS ============ -->
+      <section class="task-list-section">
+        <h2 class="section-title">suas tarefas</h2>
+
+        <ul class="task-list" id="task-list">
+
+          <!-- tarefa selecionada / em andamento -->
+          <li class="task-list__item" data-task-id="1" data-status="active">
+            <label class="task-list__checkbox">
+              <input type="checkbox">
+              <span class="task-list__checkbox-mark"></span>
+            </label>
+
+            <div class="task-list__main">
+              <span class="task-list__name">revisar proposta do cliente</span>
+              <span class="task-list__meta">
+                <span class="task-list__category" style="--category-color:#A08D17">trabalho</span>
+                <time class="task-list__date" datetime="2026-07-01">01 jul</time>
+              </span>
+            </div>
+
+            <div class="task-list__time">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span>00:42:18</span>
+            </div>
+          </li>
+
+          <!-- tarefa pendente, ainda não iniciada -->
+          <li class="task-list__item" data-task-id="2" data-status="pending">
+            <label class="task-list__checkbox">
+              <input type="checkbox">
+              <span class="task-list__checkbox-mark"></span>
+            </label>
+
+            <div class="task-list__main">
+              <span class="task-list__name">organizar arquivos do projeto</span>
+              <span class="task-list__meta">
+                <span class="task-list__category" style="--category-color:#A08D17">trabalho</span>
+                <time class="task-list__date" datetime="2026-07-01">01 jul</time>
+              </span>
+            </div>
+
+            <div class="task-list__time">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span>00:00:00</span>
+            </div>
+          </li>
+
+          <li class="task-list__item" data-task-id="3" data-status="pending">
+            <label class="task-list__checkbox">
+              <input type="checkbox">
+              <span class="task-list__checkbox-mark"></span>
+            </label>
+
+            <div class="task-list__main">
+              <span class="task-list__name">estudar hooks do react</span>
+              <span class="task-list__meta">
+                <span class="task-list__category" style="--category-color:#FF6C39">estudos</span>
+                <time class="task-list__date" datetime="2026-06-30">30 jun</time>
+              </span>
+            </div>
+
+            <div class="task-list__time">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span>00:00:00</span>
+            </div>
+          </li>
+
+          <!-- tarefa concluída -->
+          <li class="task-list__item" data-task-id="4" data-status="completed">
+            <label class="task-list__checkbox">
+              <input type="checkbox" checked>
+              <span class="task-list__checkbox-mark"></span>
+            </label>
+
+            <div class="task-list__main">
+              <span class="task-list__name">pagar contas do mês</span>
+              <span class="task-list__meta">
+                <span class="task-list__category" style="--category-color:#7C93D9">pessoal</span>
+                <time class="task-list__date" datetime="2026-06-29">29 jun</time>
+              </span>
+            </div>
+
+            <div class="task-list__time">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span>01:15:40</span>
+            </div>
+          </li>
+
+          <li class="task-list__item" data-task-id="5" data-status="completed">
+            <label class="task-list__checkbox">
+              <input type="checkbox" checked>
+              <span class="task-list__checkbox-mark"></span>
+            </label>
+
+            <div class="task-list__main">
+              <span class="task-list__name">responder e-mails da manhã</span>
+              <span class="task-list__meta">
+                <span class="task-list__category" style="--category-color:#A08D17">trabalho</span>
+                <time class="task-list__date" datetime="2026-06-29">29 jun</time>
+              </span>
+            </div>
+
+            <div class="task-list__time">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span>00:28:52</span>
+            </div>
+          </li>
+
+        </ul>
+
+        <!-- estado vazio: exibir quando não houver tarefas (controlado via JS) -->
+        <p class="task-list__empty" id="task-list-empty" hidden>
+          nenhuma tarefa por aqui ainda. adicione a primeira no formulário ao lado.
+        </p>
+      </section>
+
+      <!-- ============ TAREFA SELECIONADA + CONTADOR ============ -->
+      <!-- Esta seção só é exibida quando existe uma tarefa selecionada (controlado via JS) -->
+      <section class="active-task" id="active-task">
+        <div class="active-task__top">
+          <span class="active-task__category" style="--category-color:#A08D17">trabalho</span>
+          <h2 class="active-task__name">revisar proposta do cliente</h2>
+        </div>
+
+        <div class="timer" id="timer" data-timer-state="running">
+          <div class="timer__display">
+            <span class="timer__time">00:42:18</span>
+            <span class="timer__label">em andamento</span>
+          </div>
+
+          <div class="timer__controls">
+            <button type="button" class="timer__btn timer__btn--pause" id="timer-pause">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/>
+                <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/>
+              </svg>
+              pausar
+            </button>
+            <button type="button" class="timer__btn timer__btn--stop" id="timer-stop">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>
+              </svg>
+              encerrar
+            </button>
+          </div>
+        </div>
+
+        <div class="active-task__description">
+          <label class="active-task__description-label" for="task-description">descrição</label>
+          <textarea
+            id="task-description"
+            class="active-task__description-field"
+            placeholder="adicione detalhes sobre essa tarefa. essa descrição não aparece na lista."
+            rows="3"
+          >revisar a seção de escopo e ajustar o cronograma antes de enviar pro cliente.</textarea>
+        </div>
+
+        <div class="active-task__actions">
+          <button type="button" class="btn btn--ghost" id="edit-task">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 20L4.7 16.6L15.2 6.1C15.6 5.7 16.2 5.7 16.6 6.1L17.9 7.4C18.3 7.8 18.3 8.4 17.9 8.8L7.4 19.3L4 20Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+            editar
+          </button>
+          <button type="button" class="btn btn--ghost btn--danger" id="delete-task">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M9 7V5C9 4.4 9.4 4 10 4H14C14.6 4 15 4.4 15 5V7" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M7 7L7.6 19C7.6 19.6 8.1 20 8.7 20H15.3C15.9 20 16.4 19.6 16.4 19L17 7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+            excluir
+          </button>
+        </div>
+      </section>
+
+      <!-- ============ NOVA TAREFA ============ -->
+      <section class="task-form-section">
+        <h2 class="section-title">nova tarefa</h2>
+
+        <form class="task-form" id="task-form">
+          <div class="form-row">
+            <label class="form-row__label" for="task-name">o que precisa ser feito?</label>
+            <input
+              type="text"
+              id="task-name"
+              name="task-name"
+              class="form-row__input"
+              placeholder="ex: responder e-mails pendentes"
+              required
+            >
+          </div>
+
+          <fieldset class="form-row category-picker">
+            <legend class="form-row__label">categoria</legend>
+
+            <label class="category-picker__option">
+              <input type="radio" name="task-category" value="trabalho" checked>
+              <span class="category-picker__swatch" style="--category-color:#A08D17"></span>
+              trabalho
+            </label>
+
+            <label class="category-picker__option">
+              <input type="radio" name="task-category" value="pessoal">
+              <span class="category-picker__swatch" style="--category-color:#7C93D9"></span>
+              pessoal
+            </label>
+
+            <label class="category-picker__option">
+              <input type="radio" name="task-category" value="estudos">
+              <span class="category-picker__swatch" style="--category-color:#FF6C39"></span>
+              estudos
+            </label>
+          </fieldset>
+
+          <button type="submit" class="btn btn--primary task-form__submit">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            adicionar tarefa
+          </button>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ MODAL DE CONFIRMAÇÃO (pausar / encerrar) ============ -->
+  <dialog class="confirm-dialog" id="confirm-dialog">
+    <form method="dialog" class="confirm-dialog__content">
+      <p class="confirm-dialog__message" id="confirm-dialog-message">
+        tem certeza que deseja pausar o contador desta tarefa?
+      </p>
+      <div class="confirm-dialog__actions">
+        <button type="submit" value="cancel" class="btn btn--ghost">cancelar</button>
+        <button type="submit" value="confirm" class="btn btn--secondary" id="confirm-dialog-confirm">confirmar</button>
+      </div>
+    </form>
+  </dialog>
+
+</body>
+</html>
