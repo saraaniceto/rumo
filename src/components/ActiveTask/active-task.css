@@ -1,0 +1,160 @@
+.active-task {
+  background-color: var(--color-dark-walnut);
+  color: var(--color-floral-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-lift);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.active-task__top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.active-task__category {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--category-color, var(--color-tangerine));
+  color: var(--color-floral-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.active-task__name {
+  font-size: 1.375rem;
+  color: var(--color-floral-white);
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-top: 1px solid rgba(207, 222, 255, 0.15);
+  border-bottom: 1px solid rgba(207, 222, 255, 0.15);
+}
+
+.timer__display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.timer__time {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--color-floral-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-tangerine);
+}
+
+/* estado pausado: a cor muda pra lavanda, mais calma */
+.timer[data-timer-state="paused"] .timer__label {
+  color: var(--color-lavender);
+}
+
+.timer__controls {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.timer__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(255, 252, 243, 0.25);
+  background-color: transparent;
+  color: var(--color-floral-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color var(--transition-fast);
+}
+
+.timer__btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.timer__btn:hover {
+  background-color: rgba(255, 252, 243, 0.1);
+}
+
+.timer__btn--stop:hover {
+  background-color: rgba(255, 108, 57, 0.2);
+  border-color: var(--color-tangerine);
+}
+
+.active-task__description {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.active-task__description-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 252, 243, 0.6);
+}
+
+.active-task__description-field {
+  width: 100%;
+  resize: vertical;
+  background-color: rgba(255, 252, 243, 0.06);
+  border: 1.5px solid rgba(255, 252, 243, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-floral-white);
+}
+
+.active-task__description-field::placeholder {
+  color: rgba(255, 252, 243, 0.4);
+}
+
+.active-task__description-field:focus-visible {
+  outline: none;
+  border-color: var(--color-tangerine);
+}
+
+.active-task__actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.active-task__actions .btn--ghost {
+  border-color: rgba(255, 252, 243, 0.25);
+  color: var(--color-floral-white);
+}
+
+.active-task__actions .btn--ghost:hover {
+  border-color: var(--color-floral-white);
+}
+
+.active-task__actions .btn--danger {
+  color: #FF8F72;
+}
+
+.active-task__actions .btn--danger:hover {
+  border-color: #FF8F72;
+  background-color: rgba(255, 108, 57, 0.12);
+}

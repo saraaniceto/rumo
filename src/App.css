@@ -1,0 +1,376 @@
+/* ==========================================================================
+   botões (componente compartilhado)
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ação principal do app: adicionar tarefa. único uso "forte" do laranja em botão */
+.btn--primary {
+  background-color: var(--color-tangerine);
+  color: var(--color-floral-white);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-tangerine-strong);
+}
+
+.btn--primary:active {
+  transform: scale(0.97);
+}
+
+/* ações de confirmação secundárias: salvar categorias, confirmar modal */
+.btn--secondary {
+  background-color: var(--color-olive);
+  color: var(--color-floral-white);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-olive-strong);
+}
+
+.btn--secondary:active {
+  transform: scale(0.97);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-dark-walnut);
+  border: 1.5px solid var(--color-lavender-line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-dark-walnut);
+}
+
+.btn--danger {
+  color: #B23A1E;
+}
+
+.btn--danger:hover {
+  border-color: #B23A1E;
+  background-color: rgba(178, 58, 30, 0.06);
+}
+
+.btn:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2.5px solid var(--color-tangerine);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   menu hambúrguer
+   ========================================================================== */
+
+.menu-toggle {
+  position: fixed;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-floral-white);
+  border: 1.5px solid var(--color-lavender-line);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-dark-walnut);
+  transition: background-color var(--transition-fast);
+}
+
+.menu-toggle:hover {
+  background-color: var(--color-lavender-soft);
+}
+
+.menu-toggle__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==========================================================================
+   sidebar de categorias (off-canvas)
+   ========================================================================== */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(61, 25, 0, 0.35);
+  z-index: 45;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-medium);
+}
+
+.overlay:not([hidden]) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(var(--sidebar-width), 86vw);
+  background-color: var(--color-floral-white);
+  border-right: 1px solid var(--color-lavender-line);
+  padding: var(--space-6) var(--space-5);
+  z-index: 50;
+  transform: translateX(-100%);
+  transition: transform var(--transition-medium);
+  overflow-y: auto;
+}
+
+.sidebar.is-open {
+  transform: translateX(0);
+  box-shadow: var(--shadow-lift);
+}
+
+.sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.sidebar__title {
+  font-size: 1.75rem;
+}
+
+.sidebar__close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-dark-walnut);
+  border-radius: var(--radius-pill);
+}
+
+.sidebar__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar__close:hover {
+  background-color: var(--color-lavender-soft);
+}
+
+.sidebar__hint {
+  font-size: 0.875rem;
+  color: var(--color-walnut-soft);
+  margin-bottom: var(--space-6);
+}
+
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.category-form__item {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-lavender-line);
+}
+
+.category-form__index {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--color-tangerine);
+  padding-bottom: var(--space-2);
+}
+
+.category-form__fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.category-form__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-walnut-soft);
+}
+
+.category-form__name {
+  border: none;
+  border-bottom: 1.5px solid var(--color-lavender-line);
+  background: transparent;
+  padding: var(--space-2) 0;
+  font-size: 1rem;
+  color: var(--color-dark-walnut);
+}
+
+.category-form__name:focus-visible {
+  outline: none;
+  border-color: var(--color-tangerine);
+}
+
+.category-form__color {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid var(--color-lavender-line);
+  flex-shrink: 0;
+}
+
+.category-form__color input[type="color"] {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.category-form__submit {
+  margin-top: var(--space-2);
+  width: 100%;
+}
+
+/* ==========================================================================
+   estrutura geral do app
+   ========================================================================== */
+
+.app {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-8);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main{
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-8);
+}
+
+.app-forms {
+display:flex;
+flex-direction: column;
+gap: var(--space-6);
+}
+
+.section-title {
+  font-size: 1.375rem;
+  margin-bottom: var(--space-4);
+  color: var(--color-dark-walnut);
+}
+
+
+
+
+/* ==========================================================================
+   modal de confirmação
+   ========================================================================== */
+
+.confirm-dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  max-width: 360px;
+  width: calc(100% - var(--space-6));
+  box-shadow: var(--shadow-lift);
+  background-color: var(--color-floral-white);
+  color: var(--color-dark-walnut);
+}
+
+.confirm-dialog::backdrop {
+  background-color: rgba(61, 25, 0, 0.4);
+}
+
+.confirm-dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.confirm-dialog__message {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* ==========================================================================
+   responsividade — tablet (≥640px)
+   ========================================================================== */
+
+@media (min-width: 640px) {
+  .app {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .app-header__title {
+    font-size: 3.5rem;
+  }
+
+  .category-picker {
+    gap: var(--space-3);
+  }
+
+  .task-list__item {
+    padding: var(--space-4) var(--space-5);
+  }
+}
+
+/* ==========================================================================
+   responsividade — desktop (≥1024px)
+   duas colunas: lista sempre visível ao lado do planejamento
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  .app-main {
+    grid-template-columns: var(--planning-column-width) 1fr;
+    grid-template-areas:
+      "active list"
+      "form   list";
+  }
+}
+
+/* ==========================================================================
+   telas muito pequenas
+   ========================================================================== */
+
+@media (max-width: 380px) {
+  .timer__time {
+    font-size: 2.25rem;
+  }
+
+  .app-header__title {
+    font-size: 2.5rem;
+  }
+}
