@@ -104,7 +104,7 @@ export function TaskList(){
 
           <li className="task-list__item" data-task-id="5" data-status="completed">
             <label className="task-list__checkbox">
-              <input type="checkbox" checked />
+              <input type="checkbox" />
               <span className="task-list__checkbox-mark"></span>
             </label>
 

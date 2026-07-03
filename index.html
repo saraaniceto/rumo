@@ -14,91 +14,13 @@
 <body>
 
   <!-- ============ SIDEBAR: categorias ============ -->
+  
   <button type="button" class="menu-toggle" id="menu-toggle">
-    <svg class="menu-toggle__icon" viewBox="0 0 24 24" fill="none">
-      <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
+    
+    
   </button>
 
   <div class="overlay" id="overlay" hidden></div>
-
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar__header">
-      <h2 class="sidebar__title">categorias</h2>
-      <button type="button" class="sidebar__close" id="sidebar-close">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>˜
-      </button>
-    </div>
-
-    <p class="sidebar__hint">crie até 3 categorias pra organizar suas tarefas. dê um nome e escolha uma cor pra cada uma.</p>
-
-    <form class="category-form" id="category-form">
-
-      <div class="category-form__item">
-        <span class="category-form__index">01</span>
-        <div class="category-form__fields">
-          <label class="category-form__label" for="category-name-1">nome da categoria</label>
-          <input
-            type="text"
-            id="category-name-1"
-            name="category-name-1"
-            class="category-form__name"
-            value="trabalho"
-            maxlength="20"
-            placeholder="ex: trabalho"
-          >
-        </div>
-        <label class="category-form__color" for="category-color-1">
-          <input type="color" id="category-color-1" name="category-color-1" value="#A08D17">
-        </label>
-      </div>
-
-      <div class="category-form__item">
-        <span class="category-form__index">02</span>
-        <div class="category-form__fields">
-          <label class="category-form__label" for="category-name-2">nome da categoria</label>
-          <input
-            type="text"
-            id="category-name-2"
-            name="category-name-2"
-            class="category-form__name"
-            value="pessoal"
-            maxlength="20"
-            placeholder="ex: pessoal"
-          >
-        </div>
-        <label class="category-form__color" for="category-color-2">
-          <input type="color" id="category-color-2" name="category-color-2" value="#7C93D9">
-        </label>
-      </div>
-
-      <div class="category-form__item">
-        <span class="category-form__index">03</span>
-        <div class="category-form__fields">
-          <label class="category-form__label" for="category-name-3">nome da categoria</label>
-          <input
-            type="text"
-            id="category-name-3"
-            name="category-name-3"
-            class="category-form__name"
-            value="estudos"
-            maxlength="20"
-            placeholder="ex: estudos"
-          >
-        </div>
-        <label class="category-form__color" for="category-color-3">
-          <input type="color" id="category-color-3" name="category-color-3" value="#FF6C39">
-        </label>
-      </div>
-
-      <button type="submit" class="btn btn--secondary category-form__submit">salvar categorias</button>
-    </form>
-  </aside>
 
   <!-- ============ APP ============ -->
   <div class="app">

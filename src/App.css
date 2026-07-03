@@ -102,11 +102,6 @@ textarea:focus-visible {
   background-color: var(--color-lavender-soft);
 }
 
-.menu-toggle__icon {
-  width: 20px;
-  height: 20px;
-}
-
 /* ==========================================================================
    sidebar de categorias (off-canvas)
    ========================================================================== */
@@ -126,135 +121,7 @@ textarea:focus-visible {
   pointer-events: auto;
 }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: min(var(--sidebar-width), 86vw);
-  background-color: var(--color-floral-white);
-  border-right: 1px solid var(--color-lavender-line);
-  padding: var(--space-6) var(--space-5);
-  z-index: 50;
-  transform: translateX(-100%);
-  transition: transform var(--transition-medium);
-  overflow-y: auto;
-}
 
-.sidebar.is-open {
-  transform: translateX(0);
-  box-shadow: var(--shadow-lift);
-}
-
-.sidebar__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-4);
-}
-
-.sidebar__title {
-  font-size: 1.75rem;
-}
-
-.sidebar__close {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  color: var(--color-dark-walnut);
-  border-radius: var(--radius-pill);
-}
-
-.sidebar__close svg {
-  width: 18px;
-  height: 18px;
-}
-
-.sidebar__close:hover {
-  background-color: var(--color-lavender-soft);
-}
-
-.sidebar__hint {
-  font-size: 0.875rem;
-  color: var(--color-walnut-soft);
-  margin-bottom: var(--space-6);
-}
-
-.category-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.category-form__item {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--space-3);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-lavender-line);
-}
-
-.category-form__index {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  color: var(--color-tangerine);
-  padding-bottom: var(--space-2);
-}
-
-.category-form__fields {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.category-form__label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-walnut-soft);
-}
-
-.category-form__name {
-  border: none;
-  border-bottom: 1.5px solid var(--color-lavender-line);
-  background: transparent;
-  padding: var(--space-2) 0;
-  font-size: 1rem;
-  color: var(--color-dark-walnut);
-}
-
-.category-form__name:focus-visible {
-  outline: none;
-  border-color: var(--color-tangerine);
-}
-
-.category-form__color {
-  display: block;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  border: 1.5px solid var(--color-lavender-line);
-  flex-shrink: 0;
-}
-
-.category-form__color input[type="color"] {
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.category-form__submit {
-  margin-top: var(--space-2);
-  width: 100%;
-}
 
 /* ==========================================================================
    estrutura geral do app
