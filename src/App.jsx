@@ -12,6 +12,17 @@ function App() {
 
   const [showSideBar, setShowSideBar] = useState(false)
 
+  const [tasks, setTasks] = useState(
+    {
+      id:"1",
+      status:"pending",
+      description:"organizar arquivos do projeto",
+      category:"trabalho",
+      date:"01 jul",
+      time:"00:00:00"
+    }
+  )
+
   const toggleSideBar = () => {
     setShowSideBar(!showSideBar)
   }
