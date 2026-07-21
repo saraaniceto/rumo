@@ -60,17 +60,30 @@ function App() {
   };
 
   const toggleTaskStatus = (task) => {
-    setTasks(prevTasks =>
-      (prevTasks.map(t => {
-        if (t.id === task.id){
-          const newTaskStatus = task.status === 'completed' ?  'pending' : 'completed'
-          console.log(t.status)
-          return { ...t, status: newTaskStatus }
-          
+    setTasks((prevTasks) =>
+      prevTasks.map((t) => {
+        if (t.id === task.id) {
+          const newTaskStatus =
+            task.status === "completed" ? "pending" : "completed";
+          return { ...t, status: newTaskStatus };
         }
-        return t
-      }
-    )))
+        return t;
+      }),
+    );
+  };
+
+  const selectActiveTask = (task) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((t) => {
+        if (t.status === 'active') {
+          return {...t, status: 'pending'}
+        }
+        if (t.id === task.id) {
+          return { ...t, status: 'active' };
+        }
+        return t;
+      }),
+    );
   };
 
   return (
@@ -83,7 +96,14 @@ function App() {
         </section>
         <TaskList>
           {tasks.map(function (task) {
-            return <TaskItem key={task.id} item={task} onToggleStatus={toggleTaskStatus}/>;
+            return (
+              <TaskItem
+                key={task.id}
+                item={task}
+                onToggleStatus={toggleTaskStatus}
+                onSelectTask={selectActiveTask}
+              />
+            );
           })}
         </TaskList>
       </main>

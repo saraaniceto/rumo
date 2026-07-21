@@ -2,10 +2,10 @@ import './task-form.css'
 
 export function TaskForm(){
     return(
-        <section className="task-form-section">
-        <h2 className="section-title">nova tarefa</h2>
+        <section>
+        <h2>nova tarefa</h2>
 
-        <form className="task-form" id="task-form">
+        <form className="task-form">
           <div className="form-row">
             <label className="form-row__label" htmlFor="task-name">o que precisa ser feito?</label>
             <input

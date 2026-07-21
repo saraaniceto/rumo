@@ -1,12 +1,12 @@
 import './task-item.css'
 
-export function TaskItem( { item, onToggleStatus } ){
+export function TaskItem( { item, onToggleStatus, onSelectTask } ){
 
 
     return (
-        <li className="task-list__item" data-task-id={item.id} data-status={item.status}>
+        <li className="task-list__item" data-task-id={item.id} data-status={item.status} onClick={() => onSelectTask(item)}>
             <label className="task-list__checkbox">
-              <input type="checkbox" onChange={() => onToggleStatus(item.id)}/>
+              <input type="checkbox" onChange={() => onToggleStatus(item)}/>
               <span className="task-list__checkbox-mark"></span>
             </label>
 

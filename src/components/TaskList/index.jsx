@@ -1,13 +1,12 @@
-import { TaskItem } from '../TaskItem'
 import './task-list.css'
 
 export function TaskList({ children }){
 
     return(
-        <section className="task-list-section">
-        <h2 className="section-title">Tarefas</h2>
+        <section>
+        <h2>Tarefas</h2>
 
-        <ul className="task-list" id="task-list">
+        <ul className="task-list">
         {children}
         </ul>
 
