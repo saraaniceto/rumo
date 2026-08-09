@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ActiveTask } from "./components/ActiveTask";
 import { Header } from "./components/Header";
 import { TaskForm } from "./components/TaskForm";
@@ -10,8 +10,6 @@ import { IconMenu } from "./components/icons";
 import { TaskItem } from "./components/TaskItem";
 
 function App() {
-  const [showSideBar, setShowSideBar] = useState(false);
-
   const [tasks, setTasks] = useState([
     {
       id: "1",
@@ -55,36 +53,53 @@ function App() {
     },
   ]);
 
+  const [showSideBar, setShowSideBar] = useState(false);
+
   const toggleSideBar = () => {
     setShowSideBar(!showSideBar);
   };
 
   const toggleTaskStatus = (task) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((t) => {
+    setTasks((prevTasks) => {
+      return prevTasks.map((t) => {
         if (t.id === task.id) {
           const newTaskStatus =
             task.status === "completed" ? "pending" : "completed";
           return { ...t, status: newTaskStatus };
         }
         return t;
-      }),
-    );
+      });
+    });
   };
 
+  const [activeTask, setActiveTask] = useState(
+    tasks.find((t) => t.status === "active"),
+  );
+
+
   const selectActiveTask = (task) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((t) => {
-        if (t.status === 'active') {
-          return {...t, status: 'pending'}
-        }
+    setActiveTask({ ...task, status: "active" })
+
+    setTasks((prevTasks) => {
+      return prevTasks.map((t) => {
         if (t.id === task.id) {
-          return { ...t, status: 'active' };
+          return { ...t, status: "active" };
+        }
+        if (t.status === "active") {
+          return { ...t, status: "pending" }; //Nessa linha aqui eu preciso definir esse status dinâmicamente baseado se o checkbox tá ativo ou não
+          
         }
         return t;
-      }),
-    );
+      });
+    });
+
   };
+
+  useEffect ( () => {
+	console.log(activeTask.description)
+}, [activeTask])
+
+
 
   return (
     <div className="app">
