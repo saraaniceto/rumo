@@ -9,9 +9,7 @@ import { FabButton } from "./components/FabButton";
 import { IconMenu } from "./components/icons";
 import { TaskItem } from "./components/TaskItem";
 
-function App() {
-  const [tasks, setTasks] = useState([
-    {
+/* {
       id: "1",
       status: "pending",
       description: "organizar arquivos do projeto",
@@ -21,7 +19,7 @@ function App() {
     },
     {
       id: "2",
-      status: "active",
+      status: "pending",
       description: "revisar proposta do cliente",
       category: "trabalho",
       date: "01 jul",
@@ -37,7 +35,7 @@ function App() {
     },
     {
       id: "4",
-      status: "completed",
+      status: "pending",
       description: "pagar contas do mês",
       category: "pessoal",
       date: "29 jun",
@@ -45,13 +43,15 @@ function App() {
     },
     {
       id: "5",
-      status: "completed",
+      status: "pending",
       description: "responder e-mails da manhã",
       category: "trabalho",
       date: "01 jul",
       time: "00:00:00",
-    },
-  ]);
+    } */
+
+function App() {
+  const [tasks, setTasks] = useState([]);
 
   const [showSideBar, setShowSideBar] = useState(false);
 
@@ -72,34 +72,33 @@ function App() {
     });
   };
 
-  const [activeTask, setActiveTask] = useState(
-    tasks.find((t) => t.status === "active"),
-  );
-
+  const [activeTaskId, setActiveTaskId] = useState(null);
 
   const selectActiveTask = (task) => {
-    setActiveTask({ ...task, status: "active" })
-
-    setTasks((prevTasks) => {
-      return prevTasks.map((t) => {
-        if (t.id === task.id) {
-          return { ...t, status: "active" };
-        }
-        if (t.status === "active") {
-          return { ...t, status: "pending" }; //Nessa linha aqui eu preciso definir esse status dinâmicamente baseado se o checkbox tá ativo ou não
-          
-        }
-        return t;
-      });
-    });
-
+    if (activeTaskId == task.id) {
+      setActiveTaskId(null);
+    } else {
+      setActiveTaskId(task.id);
+    }
   };
 
-  useEffect ( () => {
-	console.log(activeTask.description)
-}, [activeTask])
+  const addToDo = (formData) => {
+    const description = formData.get("task-name")
+    const category = formData.get("task-category")
+   
+    setTasks((prevState) => {
+      const task = {
+        id: prevState.length + 1,
+        status: "pending",
+        description,
+        category,
+        date: new Date().toISOString(),
+        time: "00:00:00",
+      };
+      return [...prevState, task];
+    })
 
-
+  };
 
   return (
     <div className="app">
@@ -107,10 +106,14 @@ function App() {
       <main className="app-main">
         <section className="app-forms">
           <ActiveTask />
-          <TaskForm />
+          <TaskForm onSubmit={addToDo} />
         </section>
         <TaskList>
           {tasks.map(function (task) {
+            if (task.id == activeTaskId) {
+              task = { ...task, status: "active" };
+            }
+
             return (
               <TaskItem
                 key={task.id}

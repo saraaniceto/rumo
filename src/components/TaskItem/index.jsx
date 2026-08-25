@@ -4,13 +4,13 @@ export function TaskItem( { item, onToggleStatus, onSelectTask } ){
 
 
     return (
-        <li className="task-list__item" data-task-id={item.id} data-status={item.status} onClick={() => onSelectTask(item)}>
+        <li className="task-list__item" data-task-id={item.id} data-status={item.status} id="task-item">
             <label className="task-list__checkbox">
-              <input type="checkbox" onChange={() => onToggleStatus(item)}/>
+              <input htmlFor="task-item" type="checkbox" onChange={() => onToggleStatus(item)}/>
               <span className="task-list__checkbox-mark"></span>
             </label>
 
-            <div className="task-list__main">
+            <div className="task-list__main" onClick={() => onSelectTask(item)}>
               <span className="task-list__name">{item.description}</span>
               <span className="task-list__meta">
                 <span className="task-list__category">{item.category}</span>

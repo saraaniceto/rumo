@@ -1,42 +1,30 @@
 import './task-form.css'
 
-export function TaskForm(){
+export function TaskForm({ onSubmit }){
     return(
         <section>
-        <h2>nova tarefa</h2>
+        <h2>Adicionar tarefa</h2>
 
-        <form className="task-form">
+        <form className="task-form" action={onSubmit}>
           <div className="form-row">
-            <label className="form-row__label" htmlFor="task-name">o que precisa ser feito?</label>
+            <label className="form-row__label" htmlFor="task-name">O que precisa ser feito?</label>
             <input
               type="text"
               id="task-name"
               name="task-name"
               className="form-row__input"
-              placeholder="ex: responder e-mails pendentes"
+              placeholder="ex: Responder e-mails pendentes"
               required
             />
           </div>
 
           <fieldset className="form-row category-picker">
-            <legend className="form-row__label">categoria</legend>
+            <legend className="form-row__label">Categoria</legend>
 
             <label className="category-picker__option">
               <input type="radio" name="task-category" value="trabalho" />
               <span className="category-picker__swatch" ></span>
               trabalho
-            </label>
-
-            <label className="category-picker__option">
-              <input type="radio" name="task-category" value="pessoal" />
-              <span className="category-picker__swatch"></span>
-              pessoal
-            </label>
-
-            <label className="category-picker__option">
-              <input type="radio" name="task-category" value="estudos" />
-              <span className="category-picker__swatch"></span>
-              estudos
             </label>
           </fieldset>
 
