@@ -51,7 +51,11 @@ import { TaskItem } from "./components/TaskItem";
     } */
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+
+  const STORAGE_KEY = "tasks"
+  const taskList = localStorage.getItem(STORAGE_KEY);
+
+  const [tasks, setTasks] = useState( taskList ? JSON.parse(taskList) : []);
 
   const [showSideBar, setShowSideBar] = useState(false);
 
@@ -83,9 +87,9 @@ function App() {
   };
 
   const addToDo = (formData) => {
-    const description = formData.get("task-name")
-    const category = formData.get("task-category")
-   
+    const description = formData.get("task-name");
+    const category = formData.get("task-category");
+
     setTasks((prevState) => {
       const task = {
         id: prevState.length + 1,
@@ -96,9 +100,12 @@ function App() {
         time: "00:00:00",
       };
       return [...prevState, task];
-    })
-
+    });
   };
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div className="app">
