@@ -9,47 +9,6 @@ import { FabButton } from "./components/FabButton";
 import { IconMenu } from "./components/icons";
 import { TaskItem } from "./components/TaskItem";
 
-/* {
-      id: "1",
-      status: "pending",
-      description: "organizar arquivos do projeto",
-      category: "trabalho",
-      date: "01 jul",
-      time: "00:00:00",
-    },
-    {
-      id: "2",
-      status: "pending",
-      description: "revisar proposta do cliente",
-      category: "trabalho",
-      date: "01 jul",
-      time: "00:42:18",
-    },
-    {
-      id: "3",
-      status: "pending",
-      description: "estudar hooks do react",
-      category: "estudos",
-      date: "30 jun",
-      time: "00:00:00",
-    },
-    {
-      id: "4",
-      status: "pending",
-      description: "pagar contas do mês",
-      category: "pessoal",
-      date: "29 jun",
-      time: "01:15:40",
-    },
-    {
-      id: "5",
-      status: "pending",
-      description: "responder e-mails da manhã",
-      category: "trabalho",
-      date: "01 jul",
-      time: "00:00:00",
-    } */
-
 function App() {
 
   const STORAGE_KEY = "tasks"
@@ -76,15 +35,16 @@ function App() {
     });
   };
 
-  const [activeTaskId, setActiveTaskId] = useState(null);
+  const [activeTaskId, setActiveTaskId] = useState(1);
 
   const selectActiveTask = (task) => {
     if (activeTaskId == task.id) {
-      setActiveTaskId(null);
+      setActiveTaskId(1);
     } else {
       setActiveTaskId(task.id);
     }
   };
+
 
   const addToDo = (formData) => {
     const description = formData.get("task-name");
@@ -103,6 +63,7 @@ function App() {
     });
   };
 
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
@@ -112,7 +73,7 @@ function App() {
       <Header />
       <main className="app-main">
         <section className="app-forms">
-          <ActiveTask />
+          <ActiveTask activeTask={tasks[activeTaskId - 1]} />
           <TaskForm onSubmit={addToDo} />
         </section>
         <TaskList>

@@ -1,30 +1,58 @@
-import './task-item.css'
+import "./task-item.css";
 
-export function TaskItem( { item, onToggleStatus, onSelectTask } ){
+export function TaskItem({ item, onToggleStatus, onSelectTask }) {
 
+  function formatDate(date) {
+    const parsedDate = new Date(date);
 
-    return (
-        <li className="task-list__item" data-task-id={item.id} data-status={item.status} id="task-item">
-            <label className="task-list__checkbox">
-              <input htmlFor="task-item" type="checkbox" onChange={() => onToggleStatus(item)}/>
-              <span className="task-list__checkbox-mark"></span>
-            </label>
+    return new Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit",
+      month: "short",
+    }).format(parsedDate);
+  }
 
-            <div className="task-list__main" onClick={() => onSelectTask(item)}>
-              <span className="task-list__name">{item.description}</span>
-              <span className="task-list__meta">
-                <span className="task-list__category">{item.category}</span>
-                <time className="task-list__date" dateTime="2026-07-01">{item.date}</time>
-              </span>
-            </div>
+  return (
+    <li
+      className="task-list__item"
+      data-task-id={item.id}
+      data-status={item.status}
+      id="task-item"
+    >
+      <label className="task-list__checkbox">
+        <input
+          htmlFor="task-item"
+          type="checkbox"
+          onChange={() => onToggleStatus(item)}
+        />
+        <span className="task-list__checkbox-mark"></span>
+      </label>
 
-            <div className="task-list__time">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6"/>
-                <path d="M12 7V12L15.5 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-              </svg>
-              <span>{item.time}</span>
-            </div>
-          </li>
-    )
+      <div className="task-list__main" onClick={() => onSelectTask(item)}>
+        <span className="task-list__name">{item.description}</span>
+        <span className="task-list__meta">
+          <span className="task-list__category">{item.category}</span>
+          <span className="task-list__date">{formatDate(item.date)}</span>
+        </span>
+      </div>
+
+      <div className="task-list__time">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          />
+          <path
+            d="M12 7V12L15.5 14"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
+        </svg>
+        <span>{item.time}</span>
+      </div>
+    </li>
+  );
 }
