@@ -68,6 +68,16 @@ function App() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
 
+
+  const editTask = (task, formData) => {
+    const newDescription = formData.get("task-new-description")
+
+    setTasks((t) => {
+     t.id === task.id ?
+       {...task, description:newDescription} : task
+  })
+};
+
   return (
     <div className="app">
       <Header />
@@ -88,6 +98,7 @@ function App() {
                 item={task}
                 onToggleStatus={toggleTaskStatus}
                 onSelectTask={selectActiveTask}
+                onEditTask={editTask}
               />
             );
           })}

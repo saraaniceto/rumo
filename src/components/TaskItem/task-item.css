@@ -1,4 +1,12 @@
+.task-list__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
 .task-list__item {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -9,22 +17,22 @@
   transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.task-list__item:hover {
+.task-list__row:hover .task-list__item {
   border-color: var(--color-tangerine);
   transform: translateY(-1px);
 }
 
-.task-list__item:not([data-status="active"]):has(input:checked) {
+.task-list__row:not([data-status="active"]) .task-list__item:has(input:checked) {
   background-color: var(--color-olive-soft);
   border-color: transparent;
 }
 
-.task-list__item:not([data-status="active"]):has(input:checked) .task-list__name {
+.task-list__row:not([data-status="active"]) .task-list__item:has(input:checked) .task-list__name {
   text-decoration: line-through;
   color: var(--color-walnut-soft);
 }
 
-.task-list__item[data-status="active"] {
+.task-list__row[data-status="active"] .task-list__item {
   border-color: var(--color-tangerine);
   background-color: rgba(255, 108, 57, 0.06);
 }
@@ -135,6 +143,45 @@
 .task-list__time svg {
   width: 16px;
   height: 16px;
+}
+
+.task-list__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.task-list__row:hover .task-list__actions,
+.task-list__row:focus-within .task-list__actions {
+  opacity: 1;
+}
+
+.task-list__actions .btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  color: var(--color-walnut-soft);
+}
+
+.task-list__actions .btn:hover,
+.task-list__actions .btn:focus-visible {
+  border-color: var(--color-lavender-line);
+  color: var(--color-dark-walnut);
+}
+
+.task-list__actions .btn--danger:hover,
+.task-list__actions .btn--danger:focus-visible {
+  border-color: #FF8F72;
+  color: #D94E2D;
+  background-color: rgba(255, 108, 57, 0.08);
+}
+
+.task-list__actions svg {
+  width: 17px;
+  height: 17px;
 }
 
 .task-list__empty {

@@ -22,7 +22,9 @@ export function TaskForm({ onSubmit }){
             <legend className="form-row__label">Categoria</legend>
 
             <label className="category-picker__option">
-              <input type="radio" name="task-category" value="trabalho" />
+              <input type="radio"
+              id="task-category"
+              name="task-category" value="trabalho" />
               <span className="category-picker__swatch" ></span>
               trabalho
             </label>
