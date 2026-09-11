@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./task-item.css";
 
-export function TaskItem({ item, onToggleStatus, onSelectTask, onSubmit, onDeleteTask }) {
+export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDeleteTask }) {
   
   const [isEditing, setIsEditing] = useState(false)
+  const [description, setDescription] = useState(item.description)
 
   function formatDate(date) {
     const parsedDate = new Date(date);
@@ -33,15 +34,27 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onSubmit, onDelet
 
         <div className="task-list__main" onClick={() => onSelectTask(item)}>
           { isEditing ? (
-              <form action={onSubmit}>
-                <input type="text" placeholder={item.description} id="task-new-description" name="task-new-description"/>
-                <button className="btn-check" type="submit" onClick={() => setIsEditing(false)}>
+              <>
+                <input type="text"
+                  id="task-new-description"
+                  name="task-new-description"
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
+                  required
+                />
+                <button
+                  className="btn-check"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onEditTask(item.id, description);
+                    setIsEditing(false);
+                  }}
+                >
                   <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
-                </button>
-                
-              </form>
+                </button>      
+              </>
           ) : (
             <span className="task-list__name">{item.description}</span>
           )}
