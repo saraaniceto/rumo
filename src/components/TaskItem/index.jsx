@@ -4,6 +4,7 @@ import "./task-item.css";
 export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDeleteTask }) {
   
   const [isEditing, setIsEditing] = useState(false)
+  
   const [description, setDescription] = useState(item.description)
 
   function formatDate(date) {
@@ -31,8 +32,8 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
           />
           <span className="task-list__checkbox-mark"></span>
         </label>
-
-        <div className="task-list__main" onClick={() => onSelectTask(item)}>
+        
+        <div className="task-list__main" onClick={() => !isEditing && onSelectTask(item)}>
           { isEditing ? (
               <>
                 <input type="text"
@@ -40,6 +41,17 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
                   name="task-new-description"
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
+                  onClick={(event) => event.stopPropagation()}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      onEditTask(item.id, description);
+                      setIsEditing(false);
+                    } else if (event.key === "Escape") {
+                      setDescription(item.description);
+                      setIsEditing(false);
+                    }
+                  }}
                   required
                 />
                 <button
@@ -50,7 +62,7 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
                     setIsEditing(false);
                   }}
                 >
-                  <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </button>      
@@ -98,7 +110,7 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
         <button
           type="button"
           className="btn btn--ghost btn--danger"
-          onClick={() => onDeleteTask(item)}
+          onClick={() => onDeleteTask(item.id)}
 
         >
           <svg viewBox="0 0 24 24" fill="none">

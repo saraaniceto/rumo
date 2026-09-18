@@ -1,6 +1,18 @@
 import './active-task.css'
 
 export function ActiveTask({ activeTask }) {
+
+  if (!activeTask) {
+  return (
+    <section className="active-task" id="active-task">
+      <div className="active-task__top">
+        <h2 className="active-task__name">Nenhuma tarefa ativa</h2>
+      </div>
+      <p className="active-task__hint">Selecione ou adicione uma tarefa para iniciar.</p>
+    </section>
+  );
+}
+
     return(
         <section className="active-task" id="active-task">
         <div className="active-task__top">

@@ -14,7 +14,14 @@ function App() {
   const STORAGE_KEY = "tasks"
   const taskList = localStorage.getItem(STORAGE_KEY);
 
-  const [tasks, setTasks] = useState( taskList ? JSON.parse(taskList) : []);
+  const [tasks, setTasks] = useState( taskList ? JSON.parse(taskList) : [{
+        id: 1,
+        status: "pending",
+        description: "Empty State",
+        category: "trabalho",
+        date: new Date().toISOString(),
+        time: "00:00:00",
+      }]);
 
   const [showSideBar, setShowSideBar] = useState(false);
 
@@ -38,11 +45,7 @@ function App() {
   const [activeTaskId, setActiveTaskId] = useState(1);
 
   const selectActiveTask = (task) => {
-    if (activeTaskId == task.id) {
-      setActiveTaskId(1);
-    } else {
-      setActiveTaskId(task.id);
-    }
+    setActiveTaskId(task.id);
   };
 
 
@@ -52,7 +55,7 @@ function App() {
 
     setTasks((prevState) => {
       const task = {
-        id: prevState.length + 1,
+        id: Date.now(),
         status: "pending",
         description,
         category,
@@ -63,27 +66,36 @@ function App() {
     });
   };
 
-
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
 
-  const editTask = (id, description) => {
-    setTasks(prevState =>
-      prevState.map(task =>
-        task.id === activeTaskId ?
-        {...task, description: description} :
-        task
+
+  const editTask = (taskId, description) => {
+    setTasks((prevState) =>
+      prevState.map((task) =>
+        task.id === taskId ? { ...task, description } : task
       )
-    )
-  }
+    );
+  };
+
+  const removeTask = (taskIdToRemove) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskIdToRemove);
+    setTasks(updatedTasks);
+
+    if (activeTaskId === taskIdToRemove) {
+      setActiveTaskId(updatedTasks.length > 0 ? updatedTasks[0].id : null);
+    }
+  };
+
+  const currentActiveTask = tasks.find((task) => task.id === activeTaskId) || null;
 
   return (
     <div className="app">
       <Header />
       <main className="app-main">
         <section className="app-forms">
-          <ActiveTask activeTask={tasks[activeTaskId - 1]} />
+          <ActiveTask activeTask={currentActiveTask} />
           <TaskForm onSubmit={addToDo} />
         </section>
         <TaskList>
@@ -99,6 +111,7 @@ function App() {
                 onToggleStatus={toggleTaskStatus}
                 onSelectTask={selectActiveTask}
                 onEditTask={editTask}
+                onDeleteTask={removeTask}
               />
             );
           })}
