@@ -1,25 +1,31 @@
 import './active-task.css'
 
-export function ActiveTask({ activeTask }) {
+export function ActiveTask({ activeTask, categories }) {
+
 
   if (!activeTask) {
+    return (
+      <section className="active-task" id="active-task">
+        <div className="active-task__top">
+          <h2 className="active-task__name">Nenhuma tarefa ativa</h2>
+        </div>
+        <p className="active-task__hint">Selecione ou adicione uma tarefa para iniciar.</p>
+      </section>
+    );
+  }
+  const categoryColor = categories?.find(
+    (cat) => cat.name === activeTask.category || cat.id === activeTask.category
+  )?.color || "var(--color-tangerine)";
+
+
+
   return (
     <section className="active-task" id="active-task">
       <div className="active-task__top">
-        <h2 className="active-task__name">Nenhuma tarefa ativa</h2>
-      </div>
-      <p className="active-task__hint">Selecione ou adicione uma tarefa para iniciar.</p>
-    </section>
-  );
-}
+        <span className="active-task__category" style={{ backgroundColor: categoryColor }}>{activeTask.category}</span>
+        <h2 className="active-task__name">{activeTask.description}</h2>
 
-    return(
-        <section className="active-task" id="active-task">
-        <div className="active-task__top">
-          <span className="active-task__category">trabalho</span>
-          <h2 className="active-task__name">{activeTask.description}</h2>
-
-          <div className="active-task__actions">
+        <div className="active-task__actions">
 
           {/* <button type="button" className="btn btn--ghost" id="edit-task">
             <svg viewBox="0 0 24 24" fill="none">
@@ -36,32 +42,32 @@ export function ActiveTask({ activeTask }) {
           </button> */}
 
         </div>
+      </div>
+
+      <div className="timer" id="timer" data-timer-state="running">
+        <div className="timer__display">
+          <span className="timer__time">{activeTask.time}</span>
+          <span className="timer__label">em andamento</span>
         </div>
 
-        <div className="timer" id="timer" data-timer-state="running">
-          <div className="timer__display">
-            <span className="timer__time">{activeTask.time}</span>
-            <span className="timer__label">em andamento</span>
-          </div>
-
-          <div className="timer__controls">
-            <button type="button" className="timer__btn timer__btn--pause" id="timer-pause">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/>
-                <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/>
-              </svg>
-              pausar
-            </button>
-            <button type="button" className="timer__btn timer__btn--stop" id="timer-stop">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>
-              </svg>
-              encerrar
-            </button>
-          </div>
+        <div className="timer__controls">
+          <button type="button" className="timer__btn timer__btn--pause" id="timer-pause">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" />
+              <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" />
+            </svg>
+            pausar
+          </button>
+          <button type="button" className="timer__btn timer__btn--stop" id="timer-stop">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+            </svg>
+            encerrar
+          </button>
         </div>
+      </div>
 
-        {/* <div className="active-task__description">
+      {/* <div className="active-task__description">
           <label className="active-task__description-label" htmlFor="task-description">descrição</label>
           <textarea
             id="task-description"
@@ -70,6 +76,6 @@ export function ActiveTask({ activeTask }) {
             rows="3"
           >revisar a seção de escopo e ajustar o cronograma antes de enviar pro cliente.</textarea>
         </div> */}
-      </section>
-    )
+    </section>
+  )
 }

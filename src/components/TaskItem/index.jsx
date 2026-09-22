@@ -1,11 +1,14 @@
 import { useState } from "react";
 import "./task-item.css";
 
-export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDeleteTask }) {
+export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDeleteTask, categories }) {
   
   const [isEditing, setIsEditing] = useState(false)
   
   const [description, setDescription] = useState(item.description)
+
+  const category = categories.find(cat => cat.name === item.category);
+  const categoryColor = category ? category.color : "var(--color-tangerine)";
 
   function formatDate(date) {
     const parsedDate = new Date(date);
@@ -71,7 +74,7 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
             <span className="task-list__name">{item.description}</span>
           )}
 
-          <span className="task-list__meta">
+          <span className="task-list__meta"  style={{ '--category-color': categoryColor }}>
             <span className="task-list__category">{item.category}</span>
             <span className="task-list__date">{formatDate(item.date)}</span>
           </span>

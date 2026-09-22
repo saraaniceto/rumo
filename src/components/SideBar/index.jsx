@@ -2,32 +2,63 @@ import "./side-bar.css";
 import { useEffect } from "react";
 import { useRef } from "react";
 
-export function SideBar({ isOpen, onClose }) {
-    //Monitora se a barra lateral está aberta ou não
-    useEffect(() => {
-        if (isOpen){
-            openSideBar()
-        } else {
-            closeSideBar()
-        }
-    }, [isOpen])
+export function SideBar({ isOpen, onClose, onSaveCategories, categories }) {
+  // Referência da barra lateral
+  const sidebarRef = useRef(null)
+  const formRef = useRef(null)
 
-    // Referência da barra lateral
-    const sidebarRef = useRef(null)
-
-    const openSideBar = () => {
-        sidebarRef.current.classList.add('is-open')
+  //Monitora se a barra lateral está aberta ou não
+  useEffect(() => {
+    if (isOpen) {
+      openSideBar()
+    } else {
+      closeSideBar()
+      formRef.current?.reset()
     }
-
-    const closeSideBar = () => {
-        sidebarRef.current.classList.remove('is-open')
-    }
+  }, [isOpen])
 
 
-    return (
+  const openSideBar = () => {
+    sidebarRef.current.classList.add('is-open')
+  }
+
+  const closeSideBar = () => {
+    sidebarRef.current.classList.remove('is-open')
+  }
+
+  //Pega os dados do formulário
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const updatedCategories = [
+      {
+        id: "category-1",
+        name: formData.get("category-name-1"),
+        color: formData.get("category-color-1"),
+      },
+      {
+        id: "category-2",
+        name: formData.get("category-name-2"),
+        color: formData.get("category-color-2"),
+      },
+      {
+        id: "category-3",
+        name: formData.get("category-name-3"),
+        color: formData.get("category-color-3"),
+      },
+    ];
+
+    onSaveCategories(updatedCategories);
+    onClose();
+  }
+
+
+
+  return (
     <aside ref={sidebarRef} className="sidebar" id="sidebar">
       <div className="sidebar__header">
-        <h2 className="sidebar__title">categorias</h2>
+        <h2 className="sidebar__title">Categorias</h2>
         <button
           type="button"
           className="sidebar__close"
@@ -52,94 +83,94 @@ export function SideBar({ isOpen, onClose }) {
       </div>
 
       <p className="sidebar__hint">
-        crie até 3 categorias pra organizar suas tarefas. dê um nome e escolha
+        Crie até 3 categorias pra organizar suas tarefas. dê um nome e escolha
         uma cor pra cada uma.
       </p>
 
-      <form className="category-form" id="category-form">
+      <form
+        ref={formRef}
+        className="category-form"
+        id="category-form"
+        onSubmit={handleSubmit}
+        key={JSON.stringify(categories)}
+        >
         <div className="category-form__item">
-          <span className="category-form__index">01</span>
+          <label className="category-form__color" htmlFor="category-color-1">
+            <input
+              type="color"
+              id="category-color-1"
+              name="category-color-1"
+              defaultValue={categories[0].color || "#A08D17"}
+            />
+          </label>
           <div className="category-form__fields">
             <label className="category-form__label" htmlFor="category-name-1">
-              nome da categoria
             </label>
             <input
               type="text"
               id="category-name-1"
               name="category-name-1"
               className="category-form__name"
-              value="trabalho"
+              defaultValue={categories[0]?.name || "Importante"}
               maxLength="20"
               placeholder="ex: trabalho"
             />
           </div>
-          <label className="category-form__color" htmlFor="category-color-1">
-            <input
-              type="color"
-              id="category-color-1"
-              name="category-color-1"
-              value="#A08D17"
-            />
-          </label>
         </div>
 
         <div className="category-form__item">
-          <span className="category-form__index">02</span>
+          <label className="category-form__color" htmlFor="category-color-2">
+            <input
+              type="color"
+              id="category-color-2"
+              name="category-color-2"
+ defaultValue={categories[1]?.color || "#FF6C39"}            />
+          </label>
           <div className="category-form__fields">
             <label className="category-form__label" htmlFor="category-name-2">
-              nome da categoria
             </label>
             <input
               type="text"
               id="category-name-2"
               name="category-name-2"
               className="category-form__name"
-              value="pessoal"
+              defaultValue={categories[1]?.name || "Urgente"}
               maxLength="20"
               placeholder="ex: pessoal"
             />
           </div>
-          <label className="category-form__color" htmlFor="category-color-2">
-            <input
-              type="color"
-              id="category-color-2"
-              name="category-color-2"
-              value="#7C93D9"
-            />
-          </label>
         </div>
 
         <div className="category-form__item">
-          <span className="category-form__index">03</span>
+          <label className="category-form__color" htmlFor="category-color-3">
+            <input
+              type="color"
+              id="category-color-3"
+              name="category-color-3"
+              defaultValue={categories[2]?.color || "#A08D17"}
+
+            />
+          </label>
           <div className="category-form__fields">
             <label className="category-form__label" htmlFor="category-name-3">
-              nome da categoria
             </label>
             <input
               type="text"
               id="category-name-3"
               name="category-name-3"
               className="category-form__name"
-              value="estudos"
+              defaultValue={categories[2]?.name || "Circunstancial"}
               maxLength="20"
               placeholder="ex: estudos"
             />
           </div>
-          <label className="category-form__color" htmlFor="category-color-3">
-            <input
-              type="color"
-              id="category-color-3"
-              name="category-color-3"
-              value="#FF6C39"
-            />
-          </label>
         </div>
 
         <button
           type="submit"
           className="btn btn--secondary category-form__submit"
         >
-          salvar categorias
+          Salvar
         </button>
       </form>
     </aside>

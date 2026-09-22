@@ -43,11 +43,38 @@ legend.form-row__label {
 
 .category-picker {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-2);
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
+.category-picker legend {
+  width: 100%;
+  margin-bottom: var(--space-1);
+}
+
+/* Esconde o radio nativo de forma acessível */
+.category-picker__radio,
+.category-picker__option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  pointer-events: none;
+}
+
+/* Choice chip individual */
 .category-picker__option {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -55,29 +82,58 @@ legend.form-row__label {
   border: 1.5px solid var(--color-lavender-line);
   border-radius: var(--radius-pill);
   font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-dark-walnut);
+  background-color: var(--color-floral-white);
   cursor: pointer;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  user-select: none;
+  transition: border-color var(--transition-fast),
+              background-color var(--transition-fast),
+              color var(--transition-fast),
+              transform var(--transition-fast);
 }
 
-.category-picker__option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+/* Hover no chip não selecionado */
+.category-picker__option:hover {
+  background-color: var(--color-lavender-soft);
+  border-color: var(--color-lavender-deep);
 }
 
+/* Foco acessível via teclado */
+.category-picker__option:has(input:focus-visible) {
+  outline: 2.5px solid var(--color-tangerine);
+  outline-offset: 2px;
+}
+
+/* Efeito tátil de clique */
+.category-picker__option:active {
+  transform: scale(0.97);
+}
+
+/* Ponto colorido (swatch) */
 .category-picker__swatch {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: var(--category-color, var(--color-tangerine));
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
 }
 
-/* o fundo do chip selecionado usa a própria cor da categoria escolhida,
-   em vez de fixar sempre a mesma cor de destaque */
-.category-picker__option:has(input:checked) {
+/* Chip no estado selecionado (checked) */
+.category-picker__option:has(input:checked),
+.category-picker > input[type="radio"]:checked + .category-picker__option {
   border-color: var(--category-color, var(--color-tangerine));
   background-color: color-mix(in srgb, var(--category-color, var(--color-tangerine)) 16%, white);
+  font-weight: 600;
+}
+
+.category-picker__option:has(input:checked):hover {
+  background-color: color-mix(in srgb, var(--category-color, var(--color-tangerine)) 22%, white);
+}
+
+.category-picker__option:has(input:checked) .category-picker__swatch {
+  transform: scale(1.15);
 }
 
 .task-form__submit {

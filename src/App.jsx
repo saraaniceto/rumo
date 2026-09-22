@@ -11,24 +11,34 @@ import { TaskItem } from "./components/TaskItem";
 
 function App() {
 
-  const STORAGE_KEY = "tasks"
-  const taskList = localStorage.getItem(STORAGE_KEY);
-
-  const [tasks, setTasks] = useState( taskList ? JSON.parse(taskList) : [{
-        id: 1,
-        status: "pending",
-        description: "Empty State",
-        category: "trabalho",
-        date: new Date().toISOString(),
-        time: "00:00:00",
-      }]);
-
   const [showSideBar, setShowSideBar] = useState(false);
-
+  
   const toggleSideBar = () => {
     setShowSideBar(!showSideBar);
   };
+  
+  const DEFAULT_CATEGORIES = [
+    { id: "category-1", name: "Importante", color: "#7C93D9" },
+    { id: "category-2", name: "Urgente", color: "#FF6C39" },
+    { id: "category-3", name: "Circunstancial", color: "#A08D17" },
+  ];
 
+  const savedCategories = localStorage.getItem("categories");
+  const [categories, setCategories] = useState(savedCategories ? JSON.parse(savedCategories) : DEFAULT_CATEGORIES);
+
+  const updateCategories = (categories) => {
+    setCategories(categories)
+  }
+
+  useEffect(() => {
+    localStorage.setItem("categories", JSON.stringify(categories));
+  }, [categories]);
+  
+  const STORAGE_KEY = "tasks"
+  const taskList = localStorage.getItem(STORAGE_KEY);
+
+  const [tasks, setTasks] = useState(taskList && taskList.length > 0 ? JSON.parse(taskList) : []);
+  
   const toggleTaskStatus = (task) => {
     setTasks((prevTasks) => {
       return prevTasks.map((t) => {
@@ -84,7 +94,7 @@ function App() {
     setTasks(updatedTasks);
 
     if (activeTaskId === taskIdToRemove) {
-      setActiveTaskId(updatedTasks.length > 0 ? updatedTasks[0].id : null);
+      setActiveTaskId(null);
     }
   };
 
@@ -95,8 +105,12 @@ function App() {
       <Header />
       <main className="app-main">
         <section className="app-forms">
-          <ActiveTask activeTask={currentActiveTask} />
-          <TaskForm onSubmit={addToDo} />
+          <ActiveTask
+          activeTask={currentActiveTask}
+          categories={categories} />
+          <TaskForm
+            onSubmit={addToDo}
+            categories={categories} />
         </section>
         <TaskList>
           {tasks.map(function (task) {
@@ -112,6 +126,7 @@ function App() {
                 onSelectTask={selectActiveTask}
                 onEditTask={editTask}
                 onDeleteTask={removeTask}
+                categories={categories}
               />
             );
           })}
@@ -121,7 +136,12 @@ function App() {
         <FabButton onClick={toggleSideBar}>
           <IconMenu />
         </FabButton>
-        <SideBar isOpen={showSideBar} onClose={toggleSideBar} />
+        <SideBar
+          isOpen={showSideBar}
+          onClose={toggleSideBar}
+          onSaveCategories={updateCategories}
+          categories={categories}
+        />
       </aside>
     </div>
   );
