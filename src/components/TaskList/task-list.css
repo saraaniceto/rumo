@@ -3,3 +3,70 @@
   flex-direction: column;
   gap: var(--space-3);
 }
+
+.task-list__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.task-list__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Label wrapper — sem estilo visual */
+.task-list__filters label {
+  display: contents;
+}
+
+/* Chip base — estado desselecionado (neutro) */
+.task-list__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-lavender-line);
+  background-color: transparent;
+  color: var(--color-walnut-soft);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Hover no estado neutro */
+.task-list__filter:hover {
+  border-color: var(--color-lavender-deep);
+  color: var(--color-dark-walnut);
+  background-color: var(--color-lavender-soft);
+}
+
+/* Chip no estado selecionado */
+.task-list__filter.is-active {
+  border-color: var(--category-color, var(--color-tangerine));
+  background-color: color-mix(in srgb, var(--category-color, var(--color-tangerine)) 14%, white);
+  color: var(--color-dark-walnut);
+  font-weight: 600;
+}
+
+
+/* Hover quando já está selecionado */
+.task-list__filter.is-active:hover {
+  background-color: color-mix(in srgb, var(--category-color, var(--color-tangerine)) 22%, white);
+}
+
+/* Efeito tátil de clique */
+.task-list__filter:active {
+  transform: scale(0.97);
+}

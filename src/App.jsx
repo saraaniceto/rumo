@@ -12,15 +12,15 @@ import { TaskItem } from "./components/TaskItem";
 function App() {
 
   const [showSideBar, setShowSideBar] = useState(false);
-  
+
   const toggleSideBar = () => {
     setShowSideBar(!showSideBar);
   };
-  
+
   const DEFAULT_CATEGORIES = [
-    { id: "category-1", name: "Importante", color: "#7C93D9" },
-    { id: "category-2", name: "Urgente", color: "#FF6C39" },
-    { id: "category-3", name: "Circunstancial", color: "#A08D17" },
+    { id: "1", name: "Importante", color: "#7C93D9" },
+    { id: "2", name: "Urgente", color: "#FF6C39" },
+    { id: "3", name: "Circunstancial", color: "#A08D17" },
   ];
 
   const savedCategories = localStorage.getItem("categories");
@@ -33,12 +33,26 @@ function App() {
   useEffect(() => {
     localStorage.setItem("categories", JSON.stringify(categories));
   }, [categories]);
-  
+
+
+  const defaultSelection = categories.map(cat => cat.name)
+  const activeFilters = localStorage.getItem("filters")
+  const [filters, setFilters] = useState(activeFilters ? JSON.parse(activeFilters) : defaultSelection)
+
+  const updateFilters = (selectedFilters) => {
+    setFilters(selectedFilters)
+  }
+
+  useEffect(() => {
+    localStorage.setItem("filters", JSON.stringify(filters));
+  }, [filters]);
+
+
   const STORAGE_KEY = "tasks"
   const taskList = localStorage.getItem(STORAGE_KEY);
 
   const [tasks, setTasks] = useState(taskList && taskList.length > 0 ? JSON.parse(taskList) : []);
-  
+
   const toggleTaskStatus = (task) => {
     setTasks((prevTasks) => {
       return prevTasks.map((t) => {
@@ -106,14 +120,20 @@ function App() {
       <main className="app-main">
         <section className="app-forms">
           <ActiveTask
-          activeTask={currentActiveTask}
-          categories={categories} />
+            activeTask={currentActiveTask}
+            categories={categories} />
           <TaskForm
             onSubmit={addToDo}
             categories={categories} />
         </section>
-        <TaskList>
-          {tasks.map(function (task) {
+        <TaskList
+          categories={categories}
+          filters={filters}
+          onSelectCategory={updateFilters}
+          >
+          {tasks
+          .filter(t => filters.includes(t.category))
+          .map(function (task) {
             if (task.id == activeTaskId) {
               task = { ...task, status: "active" };
             }

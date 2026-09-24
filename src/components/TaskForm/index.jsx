@@ -48,7 +48,7 @@ export function TaskForm({ onSubmit, categories }) {
             <path d="M12 5V19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          adicionar tarefa
+          Adicionar tarefa
         </button>
       </form>
     </section>

@@ -33,17 +33,17 @@ export function SideBar({ isOpen, onClose, onSaveCategories, categories }) {
 
     const updatedCategories = [
       {
-        id: "category-1",
+        id: "1",
         name: formData.get("category-name-1"),
         color: formData.get("category-color-1"),
       },
       {
-        id: "category-2",
+        id: "2",
         name: formData.get("category-name-2"),
         color: formData.get("category-color-2"),
       },
       {
-        id: "category-3",
+        id: "3",
         name: formData.get("category-name-3"),
         color: formData.get("category-color-3"),
       },
