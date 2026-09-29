@@ -32,7 +32,7 @@ export function TaskForm({ onSubmit, categories }) {
                 type="radio"
                 id={category.id}
                 name="task-category"
-                value={category.name}
+                value={category.id}
                 className="category-picker__radio"
                 defaultChecked={index === 0}
               />

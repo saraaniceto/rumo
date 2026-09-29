@@ -7,8 +7,9 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
   
   const [description, setDescription] = useState(item.description)
 
-  const category = categories.find(cat => cat.name === item.category);
+  const category = categories.find(cat => cat.id === item.category);
   const categoryColor = category ? category.color : "var(--color-tangerine)";
+  const categoryName = category ? category.name : "Sem categoria";
 
   function formatDate(date) {
     const parsedDate = new Date(date);
@@ -32,6 +33,7 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
             htmlFor="task-item"
             type="checkbox"
             onChange={() => onToggleStatus(item)}
+            checked={item.status === "completed"}
           />
           <span className="task-list__checkbox-mark"></span>
         </label>
@@ -75,7 +77,7 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
           )}
 
           <span className="task-list__meta"  style={{ '--category-color': categoryColor }}>
-            <span className="task-list__category">{item.category}</span>
+            <span className="task-list__category">{categoryName}</span>
             <span className="task-list__date">{formatDate(item.date)}</span>
           </span>
         </div>

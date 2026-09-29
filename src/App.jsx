@@ -35,7 +35,7 @@ function App() {
   }, [categories]);
 
 
-  const defaultSelection = categories.map(cat => cat.name)
+  const defaultSelection = categories.map(cat => cat.id)
   const activeFilters = localStorage.getItem("filters")
   const [filters, setFilters] = useState(activeFilters ? JSON.parse(activeFilters) : defaultSelection)
 
@@ -58,7 +58,7 @@ function App() {
       return prevTasks.map((t) => {
         if (t.id === task.id) {
           const newTaskStatus =
-            task.status === "completed" ? "pending" : "completed";
+            t.status === "completed" ? "pending" : "completed";
           return { ...t, status: newTaskStatus };
         }
         return t;
@@ -69,7 +69,11 @@ function App() {
   const [activeTaskId, setActiveTaskId] = useState(1);
 
   const selectActiveTask = (task) => {
-    setActiveTaskId(task.id);
+    if (task.id === activeTaskId) {
+      setActiveTaskId(null);
+    } else {
+      setActiveTaskId(task.id);
+    }
   };
 
 

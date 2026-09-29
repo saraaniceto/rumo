@@ -61,7 +61,9 @@
   height: 22px;
   border: 1.5px solid var(--color-walnut-soft);
   border-radius: var(--radius-sm);
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--color-floral-white);
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }

@@ -10,8 +10,6 @@ export function TaskList({ children, categories, filters, onSelectCategory }) {
       selectedCategories.filter(c => c !== selectedChip) :
       [...selectedCategories, selectedChip]
     
-    console.log("todas as cats" + selectedCategories)
-
     onSelectCategory(updatedCategories)
   }
 
@@ -24,9 +22,9 @@ export function TaskList({ children, categories, filters, onSelectCategory }) {
             <label>
               <button
                 type="button"
-                className={`task-list__filter${filters.includes(cat.name) ? ' is-active' : ''}`}
+                className={`task-list__filter${filters.includes(cat.id) ? ' is-active' : ''}`}
                 style={{ '--category-color': cat.color }}
-                onClick={() => selectCategory(cat.name)}
+                onClick={() => selectCategory(cat.id)}
               >
               <span className="task-list__meta">
                 <span className="task-list__category">{cat.name}</span>
