@@ -14,15 +14,18 @@ export function ActiveTask({ activeTask, categories }) {
     );
   }
   const categoryColor = categories?.find(
-    (cat) => cat.name === activeTask.category || cat.id === activeTask.category
+    (cat) => cat.id === activeTask.category
   )?.color || "var(--color-tangerine)";
 
+  const categoryName = categories?.find(
+    (cat) => cat.id === activeTask.category
+  )?.name || "Sem categoria";
 
 
   return (
     <section className="active-task" id="active-task">
       <div className="active-task__top">
-        <span className="active-task__category" style={{ backgroundColor: categoryColor }}>{activeTask.category}</span>
+        <span className="active-task__category" style={{ backgroundColor: categoryColor }}>{categoryName}</span>
         <h2 className="active-task__name">{activeTask.description}</h2>
 
         <div className="active-task__actions">

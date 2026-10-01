@@ -38,12 +38,18 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
           <span className="task-list__checkbox-mark"></span>
         </label>
         
-        <div className="task-list__main" onClick={() => !isEditing && onSelectTask(item)}>
+        <div
+        className="task-list__main"
+        data-status={item.status}
+        onClick={() => !isEditing && item.status !== 'completed' && onSelectTask(item)}
+        >
           { isEditing ? (
-              <>
-                <input type="text"
+              <div className="task-list__edit" onClick={(event) => event.stopPropagation()}>
+                <input
+                  type="text"
                   id="task-new-description"
                   name="task-new-description"
+                  className="task-list__edit-input"
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                   onClick={(event) => event.stopPropagation()}
@@ -57,21 +63,25 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
                       setIsEditing(false);
                     }
                   }}
+                  autoFocus
                   required
                 />
                 <button
-                  className="btn-check"
+                  type="button"
+                  className="btn btn--secondary task-list__edit-btn"
+                  aria-label="Confirmar alteração"
+                  title="Confirmar alteração"
                   onClick={(event) => {
                     event.stopPropagation();
                     onEditTask(item.id, description);
                     setIsEditing(false);
                   }}
                 >
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </button>      
-              </>
+              </div>
           ) : (
             <span className="task-list__name">{item.description}</span>
           )}
