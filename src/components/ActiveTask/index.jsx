@@ -2,7 +2,6 @@ import './active-task.css'
 
 export function ActiveTask({ activeTask, categories }) {
 
-
   if (!activeTask) {
     return (
       <section className="active-task" id="active-task">
@@ -13,6 +12,7 @@ export function ActiveTask({ activeTask, categories }) {
       </section>
     );
   }
+
   const categoryColor = categories?.find(
     (cat) => cat.id === activeTask.category
   )?.color || "var(--color-tangerine)";

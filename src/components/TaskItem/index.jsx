@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./task-item.css";
 
-export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDeleteTask, categories }) {
+export function TaskItem({ item, isActive, onToggleStatus, onSelectTask, onEditTask, onDeleteTask, categories }) {
   
   const [isEditing, setIsEditing] = useState(false)
   
@@ -24,7 +24,7 @@ export function TaskItem({ item, onToggleStatus, onSelectTask, onEditTask, onDel
     <li
       className="task-list__row"
       data-task-id={item.id}
-      data-status={item.status}
+      data-status={isActive ? "active" : item.status}
       id="task-item"
     >
       <div className="task-list__item">

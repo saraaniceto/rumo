@@ -7,7 +7,6 @@ import { TaskList } from "./components/TaskList";
 import { SideBar } from "./components/SideBar";
 import { FabButton } from "./components/FabButton";
 import { IconMenu } from "./components/icons";
-import { TaskItem } from "./components/TaskItem";
 
 function App() {
 
@@ -131,30 +130,16 @@ function App() {
             categories={categories} />
         </section>
         <TaskList
+          tasks={tasks}
           categories={categories}
           filters={filters}
+          activeTaskId={activeTaskId}
           onSelectCategory={updateFilters}
-          >
-          {tasks
-          .filter(t => filters.includes(t.category))
-          .map(function (task) {
-            if (task.id == activeTaskId) {
-              task = { ...task, status: "active" };
-            }
-
-            return (
-              <TaskItem
-                key={task.id}
-                item={task}
-                onToggleStatus={toggleTaskStatus}
-                onSelectTask={selectActiveTask}
-                onEditTask={editTask}
-                onDeleteTask={removeTask}
-                categories={categories}
-              />
-            );
-          })}
-        </TaskList>
+          onToggleStatus={toggleTaskStatus}
+          onSelectTask={selectActiveTask}
+          onEditTask={editTask}
+          onDeleteTask={removeTask}
+        />
       </main>
       <aside>
         <FabButton onClick={toggleSideBar}>
