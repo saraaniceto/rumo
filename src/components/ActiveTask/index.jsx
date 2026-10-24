@@ -1,6 +1,7 @@
 import './active-task.css'
+import { Timer } from '../Timer';
 
-export function ActiveTask({ activeTask, categories }) {
+export function ActiveTask({ activeTask, categories, onUpdateTime }) {
 
   if (!activeTask) {
     return (
@@ -47,28 +48,7 @@ export function ActiveTask({ activeTask, categories }) {
         </div>
       </div>
 
-      <div className="timer" id="timer" data-timer-state="running">
-        <div className="timer__display">
-          <span className="timer__time">{activeTask.time}</span>
-          <span className="timer__label">em andamento</span>
-        </div>
-
-        <div className="timer__controls">
-          <button type="button" className="timer__btn timer__btn--pause" id="timer-pause">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" />
-              <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" />
-            </svg>
-            pausar
-          </button>
-          <button type="button" className="timer__btn timer__btn--stop" id="timer-stop">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
-            </svg>
-            encerrar
-          </button>
-        </div>
-      </div>
+      <Timer activeTask={activeTask} onUpdateTime={onUpdateTime}/>
 
       {/* <div className="active-task__description">
           <label className="active-task__description-label" htmlFor="task-description">descrição</label>

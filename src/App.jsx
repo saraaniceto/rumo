@@ -51,6 +51,9 @@ function App() {
   const taskList = localStorage.getItem(STORAGE_KEY);
 
   const [tasks, setTasks] = useState(taskList && taskList.length > 0 ? JSON.parse(taskList) : []);
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const toggleTaskStatus = (task) => {
     setTasks((prevTasks) => {
@@ -87,7 +90,7 @@ function App() {
         description,
         category,
         date: new Date().toISOString(),
-        time: "00:00:00",
+        time: 0,
       };
       return [...prevState, task];
     });
@@ -117,6 +120,14 @@ function App() {
 
   const currentActiveTask = tasks.find((task) => task.id === activeTaskId) || null;
 
+  const updateTime = (taskId, time) => {
+    setTasks((prevState) =>
+      prevState.map((task) =>
+        task.id === taskId ? { ...task, time } : task
+      )
+    );
+  }
+
   return (
     <div className="app">
       <Header />
@@ -124,7 +135,9 @@ function App() {
         <section className="app-forms">
           <ActiveTask
             activeTask={currentActiveTask}
-            categories={categories} />
+            categories={categories}
+            onUpdateTime={updateTime}
+          />
           <TaskForm
             onSubmit={addToDo}
             categories={categories} />
