@@ -51,9 +51,31 @@ function App() {
   const taskList = localStorage.getItem(STORAGE_KEY);
 
   const [tasks, setTasks] = useState(taskList && taskList.length > 0 ? JSON.parse(taskList) : []);
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  const sessionActiveTaskId = parseInt(sessionStorage.getItem("activeTaskId"))
+  const [activeTaskId, setActiveTaskId] = useState(sessionActiveTaskId || null);
+
+  const selectActiveTask = (task) => {
+    if (task.id === activeTaskId) {
+      setActiveTaskId(null);
+    } else {
+      setActiveTaskId(task.id);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTaskId) {
+      sessionStorage.setItem("activeTaskId", activeTaskId);
+    } else {
+      sessionStorage.removeItem("activeTaskId");
+    }
+  }, [activeTaskId]);
+
+  const currentActiveTask = tasks.find((task) => task.id === activeTaskId) || null;
 
   const toggleTaskStatus = (task) => {
     setTasks((prevTasks) => {
@@ -66,16 +88,6 @@ function App() {
         return t;
       });
     });
-  };
-
-  const [activeTaskId, setActiveTaskId] = useState(1);
-
-  const selectActiveTask = (task) => {
-    if (task.id === activeTaskId) {
-      setActiveTaskId(null);
-    } else {
-      setActiveTaskId(task.id);
-    }
   };
 
 
@@ -118,7 +130,6 @@ function App() {
     }
   };
 
-  const currentActiveTask = tasks.find((task) => task.id === activeTaskId) || null;
 
   const updateTime = (taskId, time) => {
     setTasks((prevState) =>
