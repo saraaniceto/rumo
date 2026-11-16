@@ -1,45 +1,54 @@
-import './timer.css'
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useState } from "react";
+import "./timer.css";
 
-export function Timer({ activeTask, onUpdateTime }) {
-    const [time, setTime] = useState(activeTask.time);
-    const [isRunning, setIsRunning] = useState(false);
+export function Timer({ activeTask, isRunning, initialTime, onPlayTimer }) {
+  const [now, setNow] = useState(() => Date.now());
 
-    const intervalRef = useRef(null);
+  useEffect(() => {
+    if (!isRunning) return;
 
-    const handlePlayTimer = () => {
-        setIsRunning(prevIsRunning => !prevIsRunning);
+    const intervalId = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [isRunning]);
 
-        if (!isRunning) {
-            intervalRef.current = setInterval(() => {
-                setTime(prevTime => prevTime + 1);
-            }, 1000);
+  let time = activeTask.time;
 
-        } else {
-            setIsRunning(false)
-            clearInterval(intervalRef.current);
-            onUpdateTime(activeTask.id, time)
-        }
-    }
+  if (isRunning) {
+    const elapsedTime = Math.max(0, now - initialTime);
+    time += elapsedTime;
+  }
 
-    const seconds = (time % 60).toString().padStart(2, "0");
-    const minutes = Math.floor((time / 60) % 60).toString().padStart(2, "0");
-    const hours = Math.floor((time / 60) / 60).toString().padStart(2, "0");
+  const seconds = Math.floor((time / 1000) % 60)
+    .toString()
+    .padStart(2, "0");
+  const minutes = Math.floor((time / 1000 / 60) % 60)
+    .toString()
+    .padStart(2, "0");
+  const hours = Math.floor(time / 1000 / 60 / 60)
+    .toString()
+    .padStart(2, "0");
 
-    return (
+  return (
+    <div className="timer" id="timer" data-timer-state="running">
+      <div className="timer__display">
+        <span className="timer__time">
+          {hours}:{minutes}:{seconds}
+        </span>
+        <span className="timer__label">em andamento</span>
+      </div>
 
-        <div className="timer" id="timer" data-timer-state="running">
-            <div className="timer__display">
-                <span className="timer__time">{hours}:{minutes}:{seconds}</span>
-                <span className="timer__label">em andamento</span>
-            </div>
-
-            <div className="timer__controls">
-                <button type="button" className="timer__btn timer__btn--pause" id="timer-pause"
-                    onClick={handlePlayTimer}>
-                    {isRunning ? "Pausar" : "Iniciar"}
-                </button>
-            </div>
-        </div>
-    )
+      <div className="timer__controls">
+        <button
+          type="button"
+          className="timer__btn timer__btn--pause"
+          id="timer-pause"
+          onClick={onPlayTimer}
+        >
+          {isRunning ? "Pausar" : "Iniciar"}
+        </button>
+      </div>
+    </div>
+  );
 }

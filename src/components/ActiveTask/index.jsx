@@ -1,7 +1,7 @@
 import './active-task.css'
 import { Timer } from '../Timer';
 
-export function ActiveTask({ activeTask, categories, onUpdateTime }) {
+export function ActiveTask({ activeTask, categories, isRunning, initialTime, onPlayTimer }) {
 
   if (!activeTask) {
     return (
@@ -48,7 +48,7 @@ export function ActiveTask({ activeTask, categories, onUpdateTime }) {
         </div>
       </div>
 
-      <Timer activeTask={activeTask} onUpdateTime={onUpdateTime}/>
+      <Timer activeTask={activeTask} isRunning={isRunning} initialTime={initialTime} onPlayTimer={onPlayTimer}/>
 
       {/* <div className="active-task__description">
           <label className="active-task__description-label" htmlFor="task-description">descrição</label>

@@ -7,6 +7,14 @@ export function SideBar({ isOpen, onClose, onSaveCategories, categories }) {
   const sidebarRef = useRef(null)
   const formRef = useRef(null)
 
+  const openSideBar = () => {
+    sidebarRef.current.classList.add('is-open')
+  }
+
+  const closeSideBar = () => {
+    sidebarRef.current.classList.remove('is-open')
+  }
+
   //Monitora se a barra lateral está aberta ou não
   useEffect(() => {
     if (isOpen) {
@@ -16,15 +24,6 @@ export function SideBar({ isOpen, onClose, onSaveCategories, categories }) {
       formRef.current?.reset()
     }
   }, [isOpen])
-
-
-  const openSideBar = () => {
-    sidebarRef.current.classList.add('is-open')
-  }
-
-  const closeSideBar = () => {
-    sidebarRef.current.classList.remove('is-open')
-  }
 
   //Pega os dados do formulário
   function handleSubmit(event) {
