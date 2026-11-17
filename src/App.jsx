@@ -109,16 +109,15 @@ function App() {
     }
   };
 
-  //TIMER
-
+  
   const activeTimer = JSON.parse(localStorage.getItem("timer"));
-  const [initialTime, setInitialTime] = useState(() => {
+  const [initialTime, setInitialTime] = useState(() => 
     activeTimer &&
     activeTimer.isRunning &&
-    Date.now() - activeTimer.initialTime < 300000
+    Date.now() - activeTimer.lastSeen < 300000
       ? activeTimer.initialTime
-      : null;
-  });
+      : null
+  );
 
   const [isRunning, setIsRunning] = useState(initialTime ? true : false);
 
@@ -159,6 +158,7 @@ function App() {
         JSON.stringify({
           isRunning: true,
           initialTime: currentTime,
+          lastSeen: currentTime,
           activeTaskId: currentActiveTask.id,
         }),
       );

@@ -9,6 +9,9 @@ export function Timer({ activeTask, isRunning, initialTime, onPlayTimer }) {
 
     const intervalId = setInterval(() => {
       setNow(Date.now());
+      const timerSession = JSON.parse(localStorage.getItem("timer"));
+      localStorage.setItem("timer", JSON.stringify({...timerSession, lastSeen: Date.now()}))
+
     }, 1000);
     return () => clearInterval(intervalId);
   }, [isRunning]);

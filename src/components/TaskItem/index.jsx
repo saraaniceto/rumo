@@ -11,9 +11,15 @@ export function TaskItem({ item, isActive, onToggleStatus, onSelectTask, onEditT
   const categoryColor = category ? category.color : "var(--color-tangerine)";
   const categoryName = category ? category.name : "Sem categoria";
 
-  const hours = Math.floor((item.time / 60) % 60).toString().padStart(2, "0");
-  const minutes = Math.floor((item.time / 60) / 60).toString().padStart(2, "0");
-  const seconds = (item.time % 60).toString().padStart(2, "0");
+  const seconds = Math.floor((item.time / 1000) % 60)
+    .toString()
+    .padStart(2, "0");
+  const minutes = Math.floor((item.time / 1000 / 60) % 60)
+    .toString()
+    .padStart(2, "0");
+  const hours = Math.floor(item.time / 1000 / 60 / 60)
+    .toString()
+    .padStart(2, "0");
   const timeToString = hours + ":" + minutes + ":" + seconds
 
   function formatDate(date) {
